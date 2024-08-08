@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "advent-pro";
+  src: url("./assets/fonts/advent-pro.ttf");
+}
+
+@font-face {
+  font-family: "open-sans";
+  src: url("./assets/fonts/open-sans.ttf");
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: "advent-pro";
+  }
+  body {
+    font-family: "open-sans";
+    @apply text-slate-900;
+  }
+}
+::-webkit-scrollbar {
+  @apply hidden;
+}
+.layout {
+  @apply container mx-auto;
+}
+.layout > section {
+  @apply h-[calc(100dvh-98px)] py-5 px-24;
+}
+.layout > nav {
+  @apply py-4 px-8;
+}
+nav li a.active {
+  @apply text-slate-900 font-semibold;
+}
+.custom-line {
+  @apply block ms-44 mb-2 relative before:w-40 before:h-1 before:absolute before:-left-44 before:top-1/2 before:-translate-y-1/2 before:bg-slate-900 before:rounded-full after:w-0 after:h-1/2 after:absolute after:-left-44 after:top-[calc(50%+0.15rem)];
+}
+.custom-line::after {
+  background-image: linear-gradient(
+    to bottom,
+    rgba(90, 94, 94, 0.2),
+    transparent
+  );
+  animation: appear-effect 1.4s ease-out forwards;
+}
+.slide-effect {
+  animation: slide-effect 1.5s ease-out forwards;
+}
+@keyframes slide-effect {
+  to {
+    left: -1rem;
+    width: 0;
+  }
+}
+@keyframes appear-effect {
+  to {
+    width: 10rem;
+  }
+}
+.products {
+  @apply w-[45%] py-2 flex gap-12;
+}
+.item .images {
+  @apply grid gap-4;
+  grid-template-areas: "a a b c" "a a d d";
+}
+.item .images img {
+  @apply w-[70%] m-auto hover:drop-shadow-xl;
+}
