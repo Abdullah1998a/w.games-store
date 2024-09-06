@@ -3,8 +3,8 @@ import { products } from "../../data/products";
 
 export function Product({
   id,
-  item,
-  cover_img,
+  product_name,
+  video,
   original_price,
   discount,
   setCurrentSlide,
@@ -20,16 +20,14 @@ export function Product({
     (original_price * discount) / 100
   ).toFixed(2);
   return (
-    <div className="w-full flex-shrink-0 px-6 py-3">
-      <img
-        src={cover_img}
-        alt={`${item} image`}
-        className="w-fit mx-auto size-48"
-      />
+    <div className="w-[90%] flex-shrink-0 px-6 py-3">
+      <div className="min-h-[220.84px] overflow-clip rounded-xl">
+        <video src={video} muted autoPlay loop></video>
+      </div>
       <div className="mt-3 relative">
         <Link to={`/pricing/${id}`}>
           <h3 className="text-xl uppercase font-medium [letter-spacing:3px] inline-block">
-            {item}
+            {product_name}
           </h3>
         </Link>
         <div>
@@ -39,7 +37,7 @@ export function Product({
           </span>
         </div>
         <button
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-stone-200 p-2 rounded-lg"
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-stone-200 hover:bg-stone-300 p-2 rounded-lg"
           onClick={handleSlider}
         >
           <svg

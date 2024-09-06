@@ -4,7 +4,6 @@ import { Product } from "../product";
 
 export function Products() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  console.log(currentSlide);
   return (
     <div className="products">
       {products[currentSlide] && (

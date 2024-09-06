@@ -67,10 +67,3 @@ nav li a.active {
 .products {
   @apply w-[45%] py-2 flex gap-12;
 }
-.item .images {
-  @apply grid gap-4;
-  grid-template-areas: "a a b c" "a a d d";
-}
-.item .images img {
-  @apply w-[70%] m-auto hover:drop-shadow-xl;
-}

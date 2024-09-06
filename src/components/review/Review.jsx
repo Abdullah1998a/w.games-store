@@ -1,18 +1,34 @@
 import avatar from "../../assets/images/avatar-1.png";
 
-export function Review() {
+export function Review({ review, currentReview, setCurrentReview, length }) {
+  const {
+    name,
+    avatar: { src, alt },
+    date,
+    message,
+    evaluation,
+  } = review;
+  const handleSlider = (mode) => {
+    if (mode === "increase") {
+      let newSlide = currentReview + 1;
+      setCurrentReview(newSlide >= length ? 0 : newSlide);
+    } else {
+      let newSlide = currentReview - 1;
+      setCurrentReview(newSlide < 0 ? length - 1 : newSlide);
+    }
+  };
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <div className="flex gap-4 items-center">
-        <img src={avatar} alt="avatar 1" className="size-16 flex-grow-0" />
+        <img src={src} alt={alt} className="size-12 flex-grow-0" />
         <div>
-          <h4 className="text-lg uppercase font-medium [letter-spacing:2px]">
-            John Doe
+          <h4 className="text-md uppercase font-medium [letter-spacing:2px]">
+            {name}
           </h4>
-          <span className="text-sm text-gray-500">12 Aug, 2024</span>
+          <span className="text-sm text-gray-500">{date}</span>
         </div>
         <span className="flex items-center gap-2 ms-auto">
-          5
+          {evaluation}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="1em"
@@ -27,14 +43,13 @@ export function Review() {
           </svg>
         </span>
       </div>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi aliquam,
-        laboriosam necessitatibus doloremque debitis, recusandae omnis quos
-        consectetur aut a ea sint hic numquam laborum ducimus magnam facilis
-        quibusdam cumque!
-      </p>
-      <div>
-        <button>
+      <p>{message}</p>
+      <div className="self-end flex gap-2">
+        <button
+          onClick={handleSlider}
+          disabled
+          className="bg-stone-200 text-slate-700 hover:bg-stone-300 disabled:text-gray-500 disabled:opacity-75 disabled:pointer-events-none p-2 rounded-lg"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="1em"
@@ -47,7 +62,10 @@ export function Review() {
             />
           </svg>
         </button>
-        <button>
+        <button
+          onClick={() => handleSlider("increase")}
+          className="bg-stone-200 text-slate-700 hover:bg-stone-300 disabled:text-gray-500 disabled:opacity-75 disabled:pointer-events-none p-2 rounded-lg"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="1em"

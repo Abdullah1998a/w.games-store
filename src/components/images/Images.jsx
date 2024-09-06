@@ -1,27 +1,25 @@
-import productVideo from "../../assets/images/product-1.mp4";
-import productOneImage1 from "../../assets/images/product-1.1.png";
-import productOneImage2 from "../../assets/images/product-1.2.png";
-import productOneImage3 from "../../assets/images/product-1.3.png";
-
-export function Images() {
+export function Images({ images, coverImg }) {
   return (
-    <div className="images">
-      <video src={productVideo} muted loop className="[grid-area:a]"></video>
-      <img
-        src={productOneImage1}
-        alt="product image 1.1"
-        className="[grid-area:b]"
-      />
-      <img
-        src={productOneImage2}
-        alt="product image 1.2"
-        className="[grid-area:c]"
-      />
-      <img
-        src={productOneImage3}
-        alt="product image 1.3"
-        className="[grid-area:d]"
-      />
+    <div className="grid grid-cols-6">
+      <div className="p-4 col-span-4 grid place-items-center border-t-[1px] border-b-[1px] border-s-[1px]">
+        <img
+          src={coverImg.src}
+          alt={coverImg.alt}
+          className="drop-shadow-xl w-[55%]"
+        />
+      </div>
+      <div className="col-span-2 grid justify-center border-s-[1px]">
+        {images.map(({ id, src, alt }) => (
+          <div
+            className={`p-4 ${
+              id === 1 ? "border-t-[1px]" : null
+            } border-b-[1px] border-e-[1px] grid place-items-center`}
+            key={id}
+          >
+            <img src={src} alt={alt} className="drop-shadow-xl w-3/4" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

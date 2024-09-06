@@ -8,7 +8,7 @@ export function Home() {
   return (
     <section className="overflow-clip">
       <Header />
-      <div className="flex justify-between items-center mt-4 pb-5 border-b-[1px]">
+      <div className="flex justify-between items-center mt-2 border-b-[1px]">
         <Event />
         <Products />
       </div>
