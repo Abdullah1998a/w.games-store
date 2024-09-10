@@ -1,0 +1,6 @@
+.backdrop {
+  @apply w-screen h-screen grid place-items-center fixed top-0 left-0 z-40 bg-black/80;
+}
+.backdrop > div {
+  @apply w-4/12 bg-white p-5 rounded-lg relative;
+}

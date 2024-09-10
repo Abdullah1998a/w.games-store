@@ -2,10 +2,12 @@ import { useShopContext } from "../../context/ShopProvider";
 
 export function Info({ item }) {
   const { cart, addOneToCart, getDiscount } = useShopContext();
-  const { id, product_name, stars, colors, original_price, availability } = item;
+  const { id, product_name, stars, colors, original_price, availability } =
+    item;
   const avaliable = cart.find((item) => item.id == id)?.avaliable;
+  const disabled = avaliable == undefined ? false : !avaliable;
   return (
-    <div className="py-3 px-6 flex justify-between items-center">
+    <div className="py-3 flex justify-between items-center">
       <div>
         <h3 className="text-xl uppercase font-medium [letter-spacing:2px] mb-2">
           {product_name}
@@ -13,8 +15,8 @@ export function Info({ item }) {
         <div className="flex gap-6 items-center">
           <button
             className="flex items-center gap-3 px-6 py-1.5 bg-slate-700 hover:bg-slate-800 rounded-md disabled:bg-neutral-500"
-            onClick={() => addOneToCart(id, availability)}
-            disabled={avaliable == undefined ? false : !avaliable}
+            onClick={() => addOneToCart(item, availability)}
+            disabled={disabled}
           >
             <span className="pe-3 border-e-[1px] text-white border-slate-400">
               Buy now
@@ -42,9 +44,9 @@ export function Info({ item }) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-2 justify-center">
+      <div className="flex flex-col gap-2 items-end">
         <span className="flex gap-3 items-center">
-          {stars}{" "}
+          <span>{stars}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="1em"
@@ -58,15 +60,7 @@ export function Info({ item }) {
             />
           </svg>
         </span>
-        <ul className="flex gap-3">
-          {colors.map((color) => (
-            <li
-              key={color}
-              className="w-5 aspect-square rounded-full"
-              style={{ backgroundColor: color }}
-            ></li>
-          ))}
-        </ul>
+        <p>{availability} items in stock</p>
       </div>
     </div>
   );

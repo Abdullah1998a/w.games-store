@@ -6,9 +6,6 @@ import { Item } from "../item";
 export function Pricing() {
   const [currentItem, setCurrentItem] = useState(0);
   const { id } = useParams();
-  const handleItem = (id) => {
-    setCurrentItem(id - 1);
-  };
   return (
     <section className="grid gap-2 grid-cols-12 items-start">
       {isNaN(id) && (
@@ -16,8 +13,10 @@ export function Pricing() {
           {products.map(({ id }) => (
             <li
               key={id}
-              className="w-full text-center py-12 cursor-pointer hover:bg-stone-200"
-              onClick={() => handleItem(id)}
+              className={`w-full text-center py-12 cursor-pointer hover:bg-stone-200 ${
+                id - 1 == currentItem ? "bg-stone-200" : "bg-transparent"
+              }`}
+              onClick={() => setCurrentItem(id - 1)}
             >
               {id}
             </li>

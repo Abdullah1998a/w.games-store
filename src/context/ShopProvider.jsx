@@ -2,7 +2,11 @@ import { createContext, useContext, useState } from "react";
 import { products } from "../data/products";
 
 const ShopContext = createContext(null);
-export default function ShopProvider({ children }) {
+export function ShopProvider({ children }) {
+  const [addRemoveModel, setAddRemoveModel] = useState({
+    status: false,
+    mode: "",
+  });
   const [cart, setCart] = useState([]);
   function getItemQuantity(id) {
     const quantity = cart.find((item) => item.id === id)?.quantity;
@@ -11,27 +15,38 @@ export default function ShopProvider({ children }) {
     }
     return quantity;
   }
-  function addOneToCart(id, avaliable) {
-    const quantity = getItemQuantity(id);
+  function addOneToCart(item, avaliable) {
+    const quantity = getItemQuantity(item.id);
     if (quantity === 0) {
-      setCart([...cart, { id, quantity: 1, avaliable: true }]);
-    }
-    else {
-      const updateItem = cart.map((item) =>
-        item.id == id
+      setCart([...cart, { ...item, quantity: 1, avaliable: true }]);
+    } else {
+      const updateItem = cart.map((cartItem) =>
+        cartItem.id == item.id
           ? {
-              ...item,
+              ...cartItem,
               quantity:
-                avaliable != item.quantity ? item.quantity + 1 : item.quantity,
-              avaliable: avaliable != item.quantity + 1,
+                avaliable != cartItem.quantity
+                  ? cartItem.quantity + 1
+                  : cartItem.quantity,
+              avaliable: avaliable != cartItem.quantity + 1,
             }
-          : item
+          : cartItem
       );
       setCart(updateItem);
     }
+    setAddRemoveModel({
+      status: true,
+      mode: "added",
+    });
   }
   function subtractOneFromCart(id) {
     const quantity = getItemQuantity(id);
+    if (quantity != 0) {
+      setAddRemoveModel({
+        status: true,
+        mode: "subtracted",
+      });
+    }
     if (quantity == 1) {
       removeItem(id);
     } else {
@@ -40,6 +55,7 @@ export default function ShopProvider({ children }) {
           ? {
               ...item,
               quantity: item.quantity - 1,
+              avaliable: true,
             }
           : item
       );
@@ -47,8 +63,18 @@ export default function ShopProvider({ children }) {
     }
   }
   function removeItem(id) {
+    const quantity = getItemQuantity(id);
     const newCart = cart.filter((item) => item.id !== id);
     setCart(newCart);
+    if (quantity != 0) {
+      setAddRemoveModel({
+        status: true,
+        mode: "removed",
+      });
+    }
+  }
+  function clearCart() {
+    setCart([]);
   }
   function getTotalCost() {
     let cost = 0;
@@ -68,10 +94,13 @@ export default function ShopProvider({ children }) {
   }
   const contextValue = {
     cart,
+    addRemoveModel,
+    setAddRemoveModel,
     getItemQuantity,
     addOneToCart,
     subtractOneFromCart,
     removeItem,
+    clearCart,
     getTotalCost,
     getDiscount,
   };

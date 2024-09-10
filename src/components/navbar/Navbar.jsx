@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { useShopContext } from "../../context/ShopProvider";
 
-export function Navbar() {
+export function Navbar({ status, setStatus }) {
   const { cart } = useShopContext();
   const totalQuantity = cart.reduce(
     (total, current) => total + current.quantity,
@@ -27,10 +27,13 @@ export function Navbar() {
       </ul>
       <span
         className={`uppercase text-[0.95rem] ${
-          totalQuantity == 0 ? "opacity-0" : null
+          totalQuantity == 0 ? "opacity-0 pointer-events-none" : null
         }`}
       >
-        <span className="bg-stone-200 rounded-full py-1 px-6 font-medium text-lg me-2">
+        <span
+          className="bg-stone-200 rounded-full py-1 px-6 font-medium text-lg me-2 cursor-pointer"
+          onClick={() => setStatus(!status)}
+        >
           {totalQuantity}
         </span>{" "}
         in cart
